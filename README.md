@@ -74,4 +74,5 @@ apne laptop pe).
 | `features.py` | Audio se feature nikalne ka common code (app is use karta hai) |
 | `app.py` | Flask backend — upload leta hai, predict karta hai |
 | `templates/index.html` | Web page — upload UI, result card, waveform |
+| `static/img/` | Photos used on the page (hero + "why this matters" section) |
 | `model/model.pkl`, `model/scaler.pkl` | Colab se download ki hui trained files (khud daalni hain) |
