@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VoiceGuard — AI Voice Verification & Cyber Fraud Protection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gov-blue: #0075FF;
+    --gov-blue-dark: #0056B3;
+    --gov-blue-deep: #0B3C73;
+    --gov-blue-light: #E8F2FF;
+    --bg-white: #FFFFFF;
+    --bg-light: #F4F8FC;
+    --text-dark: #1F2937;
+    --text-muted: #4B5563;
+    --border-gray: #E5E7EB;
+    --border-blue: #0075FF;
+    --danger: #DC2626;
+    --safe: #16A34A;
+    --font-head: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    background-color: var(--bg-white);
+    color: var(--text-dark);
+    line-height: 1.5;
+  }
+
+  a { color: var(--gov-blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .max { max-width: 1200px; margin: 0 auto; }
+
+  /* ---------- ROYAL BLUE TOPBAR ---------- */
+  .top-blue-bar {
+    background: var(--gov-blue);
+    color: #FFFFFF;
+    padding: 8px 4vw;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .top-blue-bar .helpline {
+    background: #DC2626;
+    color: #FFF;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-weight: 800;
+  }
+
+  /* ---------- CUSTOM VOICEGUARD HEADER ---------- */
+  .header-voiceguard {
+    background: #FFFFFF;
+    padding: 16px 4vw;
+    border-bottom: 1px solid var(--border-gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .vg-brand-block {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .vg-logo-svg {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+  }
+  .vg-brand-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .vg-title {
+    font-family: var(--font-head);
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--gov-blue-deep);
+    line-height: 1.1;
+  }
+  .vg-title span { color: var(--gov-blue); }
+  .vg-tagline {
+    font-size: 12px;
+    color: var(--gov-blue);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .vg-info-desc {
+    max-width: 540px;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    background: var(--gov-blue-light);
+    border-left: 4px solid var(--gov-blue);
+    padding: 10px 14px;
+    border-radius: 6px;
+    line-height: 1.45;
+  }
+
+  /* ---------- MAIN NAVIGATION ---------- */
+  nav.main-nav {
+    background: var(--gov-blue);
+    display: flex;
+    align-items: center;
+    padding: 0 4vw;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-item {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 13px 20px;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    transition: background 0.2s;
+  }
+  .nav-item:hover, .nav-item.active {
+    background: var(--gov-blue-dark);
+  }
+  .nav-home-btn {
+    background: var(--gov-blue-dark);
+    padding: 13px 18px;
+  }
+
+  /* ---------- HERO BANNER & CLEAN TEXT-FREE RADAR ---------- */
+  .hero-section {
+    background: linear-gradient(135deg, #07264A 0%, #0075FF 100%);
+    color: #FFFFFF;
+    padding: 36px 4vw;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 32px;
+    align-items: center;
+  }
+  .hero-left h1 {
+    font-family: var(--font-head);
+    font-size: clamp(26px, 3.2vw, 38px);
+    font-weight: 800;
+    margin: 0 0 12px;
+    color: #FFFFFF;
+  }
+  .hero-left p {
+    font-size: 15.5px;
+    color: #E2EFFC;
+    margin: 0 0 22px;
+    max-width: 52ch;
+  }
+  .btn-hero-cta {
+    background: #00E5FF;
+    color: #07264A;
+    border: none;
+    padding: 13px 26px;
+    border-radius: 6px;
+    font-size: 15.5px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 229, 255, 0.35);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-hero-cta:hover {
+    background: #FFFFFF;
+    transform: translateY(-2px);
+  }
+
+  /* Clean Radar Visualizer Card (Zero Text Overlay inside) */
+  .clean-radar-card {
+    background: #030F1C;
+    border: 2px solid #00A2FF;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  }
+  .clean-radar-body {
+    position: relative;
+    width: 100%;
+    height: 190px;
+    background: #010710;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .radar-circle {
+    position: absolute;
+    border: 1px dashed rgba(0, 229, 255, 0.25);
+    border-radius: 50%;
+  }
+  .radar-c1 { width: 50px; height: 50px; }
+  .radar-c2 { width: 100px; height: 100px; }
+  .radar-c3 { width: 150px; height: 150px; }
+  .radar-sweep-line {
+    position: absolute;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, rgba(0, 229, 255, 0.35) 0deg, transparent 60deg);
+    animation: rotateSweep 3s linear infinite;
+  }
+  @keyframes rotateSweep {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  canvas#voiceModulationCanvas {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ---------- SINGLE-LINE IMAGE GRID ROW ---------- */
+  .single-line-section {
+    padding: 36px 4vw;
+    background: var(--bg-light);
+  }
+  .single-line-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .compact-card {
+    background: #FFFFFF;
+    border: 1.5px solid var(--gov-blue);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 117, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+  }
+  .compact-card:hover { transform: translateY(-3px); }
+  .compact-card-img {
+    width: 100%;
+    height: 125px;
+    overflow: hidden;
+    background: #0B2447;
+  }
+  .compact-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .compact-card-header {
+    background: var(--gov-blue);
+    color: #FFFFFF;
+    padding: 8px 10px;
+    font-size: 12.5px;
+    font-weight: 800;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .compact-card-btn {
+    background: #252D3A;
+    padding: 10px;
+    text-align: center;
+    margin-top: auto;
+  }
+  .btn-mini-cyan {
+    background: #00E5FF;
+    color: #041427;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    width: 100%;
+  }
+  .btn-mini-cyan:hover { background: #FFFFFF; }
+
+  /* ---------- AUDIO ANALYZER TOOL SECTION ---------- */
+  .tool-section {
+    padding: 36px 4vw;
+    background: #FFFFFF;
+  }
+  .tool-card {
+    background: #FFFFFF;
+    border: 2px solid var(--gov-blue);
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 4px 16px rgba(0, 117, 255, 0.08);
+  }
+  .tool-card h2 {
+    font-family: var(--font-head);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--gov-blue-deep);
+    margin: 0 0 4px;
+  }
+  .tool-card p.sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin: 0 0 20px;
+  }
+
+  .dropzone {
+    border: 2px dashed var(--gov-blue);
+    border-radius: 8px;
+    padding: 32px 18px;
+    text-align: center;
+    cursor: pointer;
+    background: var(--gov-blue-light);
+    transition: background 0.2s;
+  }
+  .dropzone:hover, .dropzone.dragover { background: #D5E7FF; }
+  .dropzone .icon-box { font-size: 30px; margin-bottom: 8px; }
+  .dropzone .main-text { font-size: 15px; font-weight: 700; color: var(--gov-blue-deep); margin-bottom: 2px; }
+  .dropzone .sub-text { font-size: 12.5px; color: var(--text-muted); }
+  input[type=file] { display: none; }
+
+  .file-chip {
+    margin-top: 12px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: var(--gov-blue-light);
+    border: 1px solid var(--gov-blue);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    font-family: var(--font-mono);
+    color: var(--gov-blue-deep);
+  }
+
+  button.analyze {
+    margin-top: 18px;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    background: var(--gov-blue);
+    color: #FFFFFF;
+    font-family: var(--font-head);
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  button.analyze:disabled { opacity: 0.4; cursor: not-allowed; }
+  button.analyze:not(:disabled):hover { background: var(--gov-blue-dark); }
+
+  .loading {
+    display: none;
+    text-align: center;
+    padding: 18px 0 4px;
+    color: var(--gov-blue-deep);
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+  .spinner {
+    width: 26px; height: 26px;
+    border: 3px solid var(--gov-blue-light);
+    border-top-color: var(--gov-blue);
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .result { display: none; margin-top: 22px; }
+  .result-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 800;
+  }
+  .result-badge.fake { background: #FEE2E2; color: #DC2626; border: 1.5px solid #DC2626; }
+  .result-badge.real { background: #DCFCE7; color: #16A34A; border: 1.5px solid #16A34A; }
+
+  .confidence-row { margin-top: 16px; }
+  .confidence-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dark);
+    font-weight: 700;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .bar-bg { background: #E5E7EB; border-radius: 6px; height: 10px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; transition: width 0.6s ease; }
+  .bar-fill.fake { background: #DC2626; }
+  .bar-fill.real { background: #16A34A; }
+
+  canvas#waveform {
+    width: 100%;
+    height: 90px;
+    margin-top: 16px;
+    border-radius: 6px;
+    background: #041427;
+  }
+
+  .next-steps {
+    margin-top: 18px;
+    padding: 16px;
+    border-radius: 6px;
+  }
+  .next-steps.fake { background: #FEE2E2; border: 1px solid #FCA5A5; }
+  .next-steps.real { background: #DCFCE7; border: 1px solid #86EFAC; }
+  .next-steps h3 { margin: 0 0 8px; font-size: 15px; color: #1F2937; }
+  .next-steps ul { margin: 0; padding-left: 18px; font-size: 13.5px; color: #374151; }
+
+  /* ---------- TRUSTY SECURITY CERTIFIED BANNER ---------- */
+  .trusty-section {
+    padding: 10px 4vw 36px;
+    background: #FFFFFF;
+  }
+  .trusty-card {
+    background: #FFFFFF;
+    border: 2px solid var(--gov-blue);
+    border-left: 6px solid var(--gov-blue);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 4px 14px rgba(0, 117, 255, 0.06);
+  }
+  .trusty-card h3 {
+    font-family: var(--font-head);
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--gov-blue-deep);
+    margin: 0 0 8px;
+  }
+  .trusty-card p {
+    font-size: 14.5px;
+    color: var(--text-dark);
+    margin: 0 0 16px;
+  }
+  .trusty-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn-red {
+    background: #DC2626;
+    color: #FFF;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13.5px;
+  }
+  .btn-blue-outline {
+    border: 1.5px solid var(--gov-blue);
+    color: var(--gov-blue);
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13.5px;
+  }
+
+  /* ---------- LEARNING CORNER WITH IN-APP MODALS ---------- */
+  .learning-section {
+    padding: 40px 4vw;
+    background: var(--bg-light);
+    border-top: 1px solid var(--border-gray);
+  }
+  .learning-title {
+    font-family: var(--font-head);
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--gov-blue-deep);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .learning-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .learning-card {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 20px 16px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .lc-icon { font-size: 38px; margin-bottom: 10px; }
+  .learning-card h3 {
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 800;
+    color: #1F2937;
+    margin: 0 0 8px;
+    text-transform: uppercase;
+  }
+  .learning-card p {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin: 0 0 14px;
+  }
+  .btn-read-modal {
+    background: var(--gov-blue-light);
+    color: var(--gov-blue-deep);
+    border: 1px solid var(--gov-blue);
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: auto;
+  }
+  .btn-read-modal:hover { background: var(--gov-blue); color: #FFF; }
+
+  /* In-App Learning Modal Card */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    max-width: 540px;
+    width: 100%;
+    padding: 24px;
+    border: 2px solid var(--gov-blue);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-gray);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+  .modal-header h3 { font-family: var(--font-head); font-size: 18px; margin: 0; color: var(--gov-blue-deep); }
+  .btn-close-modal { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); }
+
+  /* ---------- ANIMATED SCROLLING CYBER FRAUD NEWS TICKER BOX ---------- */
+  .news-ticker-section {
+    padding: 30px 4vw 40px;
+    background: #FFFFFF;
+  }
+  .news-ticker-card {
+    background: #071E3D;
+    border: 2px solid #00E5FF;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  }
+  .ticker-badge-header {
+    background: var(--gov-blue);
+    color: #FFFFFF;
+    padding: 10px 18px;
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.5px;
+  }
+  .pulse-red-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #FF3B30;
+    box-shadow: 0 0 10px #FF3B30;
+    animation: pulseGlow 1.2s infinite;
+  }
+  @keyframes pulseGlow { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .marquee-wrapper {
+    overflow: hidden;
+    white-space: nowrap;
+    background: #030D1A;
+    padding: 14px 0;
+    display: flex;
+  }
+  .marquee-content {
+    display: inline-block;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: #00E5FF;
+    animation: marqueeScroll 25s linear infinite;
+  }
+  @keyframes marqueeScroll {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+  .news-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 40px;
+  }
+  .news-item strong { color: #FFFFFF; }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: #191919;
+    color: #9CA3AF;
+    padding: 20px 4vw;
+    font-size: 13px;
+    text-align: center;
+  }
+  footer a { color: #FFFFFF; }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .single-line-grid { grid-template-columns: repeat(2, 1fr); }
+    .learning-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 550px) {
+    .single-line-grid { grid-template-columns: 1fr; }
+    .learning-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Royal Blue Top Bar -->
+<div class="top-blue-bar">
+  <span>VoiceGuard Deepfake Protection Portal</span>
+  <div>National Cyber Crime Helpline: <span class="helpline">1930</span></div>
+</div>
+
+<!-- Custom VoiceGuard Header -->
+<header class="header-voiceguard">
+  <div class="vg-brand-block">
+    <svg class="vg-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 10 L85 25 V50 C85 70 50 90 50 90 C50 90 15 70 15 50 V25 L50 10 Z" fill="#0B3C73" stroke="#0075FF" stroke-width="4"/>
+      <rect x="36" y="42" width="4" height="16" rx="2" fill="#00E5FF"/>
+      <rect x="43" y="34" width="4" height="32" rx="2" fill="#0075FF"/>
+      <rect x="50" y="28" width="4" height="42" rx="2" fill="#FFFFFF"/>
+      <rect x="57" y="36" width="4" height="28" rx="2" fill="#0075FF"/>
+      <rect x="64" y="44" width="4" height="12" rx="2" fill="#00E5FF"/>
+    </svg>
+    <div class="vg-brand-text">
+      <div class="vg-title">Voice<span>Guard</span></div>
+      <div class="vg-tagline">AI VOICE VERIFICATION PORTAL</div>
+    </div>
+  </div>
+
+  <!-- Concise Explanation of VoiceGuard -->
+  <div class="vg-info-desc">
+    <strong>How VoiceGuard Helps You:</strong> VoiceGuard uses AI spectrum analysis to detect cloned voices and synthetic deepfakes in seconds. Upload any suspicious voice note or emergency call recording to verify if it is a genuine human voice or an AI scam attempt.
+  </div>
+</header>
+
+<!-- Main Navigation -->
+<nav class="main-nav">
+  <a class="nav-item nav-home-btn active" href="#">🏠 Home</a>
+  <a class="nav-item" href="#tool">Analyze Audio Clip</a>
+  <a class="nav-item" href="#cards">Protection Guide</a>
+  <a class="nav-item" href="#news">Cyber News Ticker</a>
+  <a class="nav-item" href="#learning">Learning Corner</a>
+</nav>
+
+<!-- Hero Section with Clean Text-Free Radar Visualizer -->
+<section class="hero-section">
+  <div class="max hero-inner">
+    <div class="hero-left">
+      <h1>Check a voice before you trust it.</h1>
+      <p>
+        AI can clone anyone's voice from just a few seconds of recording. Got a suspicious call or voice note? Verify it instantly below — 100% private and free.
+      </p>
+      <button class="btn-hero-cta" onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})">
+        🔍 Analyze Audio Clip
+      </button>
+    </div>
+
+    <!-- Clean Radar Card (Zero Text Overlay inside) -->
+    <div class="clean-radar-card">
+      <div class="clean-radar-body">
+        <div class="radar-circle radar-c1"></div>
+        <div class="radar-circle radar-c2"></div>
+        <div class="radar-circle radar-c3"></div>
+        <div class="radar-sweep-line"></div>
+        <canvas id="voiceModulationCanvas"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SINGLE-LINE IMAGE GRID ROW (COMPACT 1-ROW LAYOUT) -->
+<section class="single-line-section" id="cards">
+  <div class="max">
+    <div class="single-line-grid">
+
+      <!-- Compact Card 1 -->
+      <div class="compact-card">
+        <div class="compact-card-img">
+          <img src="{{ url_for('static', filename='img/scam-alert.jpg') }}" alt="Scam call alert on phone">
+        </div>
+        <div class="compact-card-header">Voice Impersonation</div>
+        <div class="compact-card-btn">
+          <button class="btn-mini-cyan" onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})">Check Audio</button>
+        </div>
+      </div>
+
+      <!-- Compact Card 2 -->
+      <div class="compact-card">
+        <div class="compact-card-img">
+          <img src="{{ url_for('static', filename='img/scam-caller.jpg') }}" alt="Financial fraud trap">
+        </div>
+        <div class="compact-card-header">Emergency Fraud</div>
+        <div class="compact-card-btn">
+          <button class="btn-mini-cyan" onclick="window.location.href='tel:1930'">Dial 1930</button>
+        </div>
+      </div>
+
+      <!-- Compact Card 3 -->
+      <div class="compact-card">
+        <div class="compact-card-img">
+          <div style="width:100%; height:100%; background: linear-gradient(135deg, #0B2447, #19376D); display:flex; align-items:center; justify-content:center; color:#00E5FF; font-size:36px;">
+            🛡️
+          </div>
+        </div>
+        <div class="compact-card-header">AI Spectrum Scanner</div>
+        <div class="compact-card-btn">
+          <button class="btn-mini-cyan" onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})">Upload File</button>
+        </div>
+      </div>
+
+      <!-- Compact Card 4 -->
+      <div class="compact-card">
+        <div class="compact-card-img">
+          <div style="width:100%; height:100%; background: linear-gradient(135deg, #0056B3, #0075FF); display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-size:36px;">
+            🔑
+          </div>
+        </div>
+        <div class="compact-card-header">Family Passphrase</div>
+        <div class="compact-card-btn">
+          <button class="btn-mini-cyan" onclick="showLearningModal('Family Passphrase Protocol', 'Set a secret code word with your family. If anyone calls claiming an emergency, ask for the secret code word before acting.')">View Protocol</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- AUDIO ANALYZER TOOL SECTION -->
+<section class="tool-section" id="tool">
+  <div class="max">
+    <div class="tool-card">
+      <h2>Upload Audio Clip for AI Verification</h2>
+      <p class="sub">Upload a phone recording, WhatsApp voice note, or audio file (WAV, MP3, M4A, OGG, FLAC)</p>
+
+      <div class="dropzone" id="dropzone">
+        <div class="icon-box">📁</div>
+        <div class="main-text">Drop audio file here, or click to browse</div>
+        <div class="sub-text">Supported formats: WAV, MP3, M4A, OGG, FLAC</div>
+        <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.ogg,.flac">
+      </div>
+
+      <div class="file-chip" id="fileChip">
+        <span>🎵</span>
+        <span id="fileName"></span>
+      </div>
+
+      <button class="analyze" id="analyzeBtn" disabled {{ 'disabled' if not model_ready else '' }}>
+        Analyze Voice Clip Spectrum
+      </button>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        Scanning audio frequencies with AI model...
+      </div>
+
+      <div class="result" id="resultCard">
+        <div id="badgeWrap"></div>
+
+        <div class="confidence-row">
+          <div class="confidence-label"><span>REAL VOICE PROBABILITY</span><span id="realPct"></span></div>
+          <div class="bar-bg"><div class="bar-fill real" id="realBar" style="width:0%"></div></div>
+        </div>
+        <div class="confidence-row">
+          <div class="confidence-label"><span>CLONED / FAKE PROBABILITY</span><span id="fakePct"></span></div>
+          <div class="bar-bg"><div class="bar-fill fake" id="fakeBar" style="width:0%"></div></div>
+        </div>
+
+        <canvas id="waveform"></canvas>
+
+        <div style="font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); margin-top: 8px;" id="durationMeta"></div>
+
+        <div class="next-steps" id="nextSteps"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUSTY SECURITY CERTIFIED BANNER -->
+<section class="trusty-section">
+  <div class="max">
+    <div class="trusty-card">
+      <h3>TRUSTY SECURITY CERTIFIED — National Cybercrime Prevention Shield</h3>
+      <p>
+        Voice clone scams cause millions in loss every month. Protect your family and business against emergency imposter frauds. If you suspect any ongoing fraud, immediately connect with official security channels.
+      </p>
+      <div class="trusty-actions">
+        <a class="btn-red" href="tel:1930">📞 Call Helpline 1930</a>
+        <a class="btn-blue-outline" href="https://cybercrime.gov.in" target="_blank" rel="noopener">Report Fraud at cybercrime.gov.in →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANIMATED SCROLLING CYBER FRAUD NEWS TICKER BOX -->
+<section class="news-ticker-section" id="news">
+  <div class="max">
+    <div class="news-ticker-card">
+      <div class="ticker-badge-header">
+        <div class="pulse-red-dot"></div>
+        LIVE CYBER FRAUD NEWS & SAFETY ALERTS
+      </div>
+      <div class="marquee-wrapper">
+        <div class="marquee-content">
+          <div class="news-item">🚨 <strong>SCAM ALERT:</strong> Fraudsters using 3-second audio samples from social media to clone voices.</div>
+          <div class="news-item">💡 <strong>SAFETY TIP:</strong> Always request a direct callback on a saved phone number during emergency calls.</div>
+          <div class="news-item">📞 <strong>NATIONAL HELPLINE 1930:</strong> Dial 1930 immediately if money is transferred to a fraud account.</div>
+          <div class="news-item">🛡️ <strong>VOICEGUARD VERIFICATION:</strong> 100% private, free AI voice spectrum analysis.</div>
+          <!-- Duplicate set for seamless continuous marquee loop -->
+          <div class="news-item">🚨 <strong>SCAM ALERT:</strong> Fraudsters using 3-second audio samples from social media to clone voices.</div>
+          <div class="news-item">💡 <strong>SAFETY TIP:</strong> Always request a direct callback on a saved phone number during emergency calls.</div>
+          <div class="news-item">📞 <strong>NATIONAL HELPLINE 1930:</strong> Dial 1930 immediately if money is transferred to a fraud account.</div>
+          <div class="news-item">🛡️ <strong>VOICEGUARD VERIFICATION:</strong> 100% private, free AI voice spectrum analysis.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING CORNER WITH IN-APP MODALS -->
+<section class="learning-section" id="learning">
+  <div class="max">
+    <h2 class="learning-title">Learning Corner</h2>
+
+    <div class="learning-grid">
+      <!-- Card 1 -->
+      <div class="learning-card">
+        <div class="lc-icon">📓</div>
+        <h3>Citizen Manual</h3>
+        <p>Step-by-step workflow guide on how to report voice scams and preserve audio evidence.</p>
+        <button class="btn-read-modal" onclick="showLearningModal('Citizen Manual', '1. Record the suspicious call if possible.<br>2. Do not transfer funds under panic.<br>3. Upload clip to VoiceGuard for spectrum scan.<br>4. Report fraudulent numbers to Helpline 1930.')">View Manual →</button>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="learning-card">
+        <div class="lc-icon">🛡️</div>
+        <h3>Cyber Safety Tips</h3>
+        <p>Essential safety rules to protect your family from voice clone emergency scams.</p>
+        <button class="btn-read-modal" onclick="showLearningModal('Cyber Safety Tips', '• Never rely solely on voice over phone.<br>• Establish a family secret emergency passphrase.<br>• Call back the caller using saved phonebook number.<br>• Be cautious if caller demands immediate UPI/bank transfer.')">View Tips →</button>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="learning-card">
+        <div class="lc-icon">💻</div>
+        <h3>Cyber Awareness</h3>
+        <p>Learn how modern AI voice generators work and how to spot synthetic audio artifacts.</p>
+        <button class="btn-read-modal" onclick="showLearningModal('Cyber Awareness', 'AI cloning tools reproduce pitch but often leave subtle spectral artifacts, robotic breath pauses, and unnatural pitch stability. VoiceGuard analyzes these mel-frequency cepstral coefficients (MFCCs).')">View Guide →</button>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="learning-card">
+        <div class="lc-icon">📜</div>
+        <h3>Daily Digest</h3>
+        <p>Daily updates on voice fraud modus operandi and latest scam prevention advisories.</p>
+        <button class="btn-read-modal" onclick="showLearningModal('Daily Digest', 'Advisory: Scammers targeting senior citizens with fake accident claims. Remember to stay calm, verify identity, and report suspicious calls immediately.')">View Digest →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- In-App Learning Modal Popup -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 id="modalTitle">Learning Topic</h3>
+      <button class="btn-close-modal" onclick="closeLearningModal()">✕</button>
+    </div>
+    <div id="modalBody" style="font-size: 14.5px; line-height: 1.6; color: #374151;"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="max">
+    VoiceGuard AI Voice Verification Portal • National Helpline: <strong style="color:#DC2626;">1930</strong> • Official Portal: cybercrime.gov.in
+  </div>
+</footer>
+
+<script>
+// Voice Modulation Canvas Oscillating Wave Simulation (Clean Radar)
+const vmCanvas = document.getElementById('voiceModulationCanvas');
+if (vmCanvas) {
+  const ctx = vmCanvas.getContext('2d');
+  let step = 0;
+
+  function renderVoiceModulation() {
+    const w = vmCanvas.offsetWidth || 300;
+    const h = vmCanvas.offsetHeight || 190;
+    vmCanvas.width = w;
+    vmCanvas.height = h;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // Dynamic Voice Modulation Sine Wave
+    ctx.beginPath();
+    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = '#00E5FF';
+
+    for (let x = 0; x < w; x++) {
+      const freq1 = Math.sin((x + step) * 0.04);
+      const freq2 = Math.cos((x - step * 0.5) * 0.08);
+      const modulation = (freq1 * freq2) * (h * 0.3);
+      const y = h / 2 + modulation;
+      if (x === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Carrier Harmonic Line
+    ctx.beginPath();
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = 'rgba(0, 117, 255, 0.6)';
+    for (let x = 0; x < w; x += 4) {
+      const y = h / 2 + Math.sin((x - step * 2) * 0.03) * (h * 0.2);
+      if (x === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    step += 2;
+    requestAnimationFrame(renderVoiceModulation);
+  }
+  renderVoiceModulation();
+}
+
+// Learning Modal Handlers
+function showLearningModal(title, content) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = content;
+  document.getElementById('modalBackdrop').style.display = 'flex';
+}
+function closeLearningModal() {
+  document.getElementById('modalBackdrop').style.display = 'none';
+}
+document.getElementById('modalBackdrop').addEventListener('click', (e) => {
+  if (e.target.id === 'modalBackdrop') closeLearningModal();
+});
+
+// Audio File Dropzone & Analyze Logic
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const fileChip = document.getElementById('fileChip');
+const fileName = document.getElementById('fileName');
+const analyzeBtn = document.getElementById('analyzeBtn');
+const loading = document.getElementById('loading');
+const resultCard = document.getElementById('resultCard');
+
+let selectedFile = null;
+
+dropzone.addEventListener('click', () => fileInput.click());
+
+dropzone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropzone.classList.add('dragover');
+});
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+dropzone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropzone.classList.remove('dragover');
+  if (e.dataTransfer.files.length) {
+    handleFile(e.dataTransfer.files[0]);
+  }
+});
+
+fileInput.addEventListener('change', () => {
+  if (fileInput.files.length) handleFile(fileInput.files[0]);
+});
+
+function handleFile(file) {
+  selectedFile = file;
+  fileName.textContent = file.name;
+  fileChip.style.display = 'flex';
+  analyzeBtn.disabled = false;
+  resultCard.style.display = 'none';
+}
+
+analyzeBtn.addEventListener('click', async () => {
+  if (!selectedFile) return;
+  loading.style.display = 'block';
+  resultCard.style.display = 'none';
+  analyzeBtn.disabled = true;
+
+  const formData = new FormData();
+  formData.append('audio', selectedFile);
+
+  try {
+    const res = await fetch('/api/predict', { method: 'POST', body: formData });
+    const data = await res.json();
+    loading.style.display = 'none';
+    analyzeBtn.disabled = false;
+
+    if (!res.ok) {
+      alert(data.error || 'Something went wrong.');
+      return;
+    }
+    showResult(data);
+  } catch (err) {
+    loading.style.display = 'none';
+    analyzeBtn.disabled = false;
+    alert('Could not connect to the server: ' + err.message);
+  }
+});
+
+function showResult(data) {
+  const isFake = data.label === 'FAKE';
+  const badgeWrap = document.getElementById('badgeWrap');
+  badgeWrap.innerHTML = `
+    <div class="result-badge ${isFake ? 'fake' : 'real'}">
+      ${isFake ? '🔴 FAKE / CLONED VOICE DETECTED' : '🟢 REAL HUMAN VOICE VERIFIED'} — ${data.confidence}% Confidence
+    </div>
+  `;
+
+  document.getElementById('realPct').textContent = data.prob_real + '%';
+  document.getElementById('fakePct').textContent = data.prob_fake + '%';
+  document.getElementById('realBar').style.width = data.prob_real + '%';
+  document.getElementById('fakeBar').style.width = data.prob_fake + '%';
+  document.getElementById('durationMeta').textContent = 'Audio Duration: ' + data.duration_sec + ' seconds';
+
+  const nextSteps = document.getElementById('nextSteps');
+  nextSteps.className = 'next-steps ' + (isFake ? 'fake' : 'real');
+  if (isFake) {
+    nextSteps.innerHTML = `
+      <h3>⚠️ EMERGENCY PROTOCOL — DEEPFAKE DETECTED</h3>
+      <ul>
+        <li><strong>DO NOT TRANSFER MONEY:</strong> Do not send any funds, OTPs, or passwords over this call.</li>
+        <li><strong>CALL BACK DIRECTLY:</strong> Disconnect immediately and call the person directly on their saved number.</li>
+        <li><strong>ASK SAFE WORD:</strong> Ask your family secret emergency passphrase.</li>
+        <li><strong>REPORT CYBER CRIME:</strong> If defrauded, call 1930 immediately or lodge complaint at cybercrime.gov.in.</li>
+      </ul>
+    `;
+  } else {
+    nextSteps.innerHTML = `
+      <h3>✅ VERIFIED — REAL VOICE PATTERNS</h3>
+      <ul>
+        <li>Audio spectrum aligns with natural human vocal resonance.</li>
+        <li>For financial transactions, still double-check via secondary verification call.</li>
+      </ul>
+    `;
+  }
+
+  drawWaveform(data.waveform, isFake);
+  resultCard.style.display = 'block';
+}
+
+function drawWaveform(points, isFake) {
+  const canvas = document.getElementById('waveform');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, rect.width, rect.height);
+
+  const w = rect.width, h = rect.height, mid = h / 2;
+  const barWidth = w / points.length;
+  const color = isFake ? '#DC2626' : '#16A34A';
+
+  ctx.fillStyle = color;
+  points.forEach((v, i) => {
+    const barH = Math.max(3, Math.abs(v) * h * 0.85);
+    ctx.fillRect(i * barWidth, mid - barH / 2, Math.max(1, barWidth - 1), barH);
+  });
+}
+</script>
+
+</body>
+</html>
