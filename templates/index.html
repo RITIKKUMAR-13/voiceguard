@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VoiceGuard — Check a voice before you trust it</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0B2027;
+    --panel: #123138;
+    --panel-2: #163C44;
+    --line: #23484F;
+    --mint: #57D9C9;
+    --coral: #FF6F59;
+    --paper: #F4FBFA;
+    --muted: #8FB4B0;
+    --font-head: 'Fraunces', serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--ink);
+    color: var(--paper);
+    line-height: 1.5;
+  }
+  a { color: var(--mint); }
+  section { padding: 0 6vw; }
+  .max { max-width: 980px; margin: 0 auto; }
+
+  /* ---------- Nav ---------- */
+  nav.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 6vw;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand-wrap { display: flex; flex-direction: column; gap: 2px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); font-size: 20px; font-weight: 600; }
+  .brand-hindi { font-size: 12px; color: var(--muted); padding-left: 40px; }
+  .brand-mark {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--mint), #2E8C80);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+  .topbar .tag { color: var(--muted); font-size: 13px; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 64px 6vw 56px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: clamp(32px, 4.4vw, 52px);
+    line-height: 1.12;
+    margin: 0 0 20px;
+    max-width: 14ch;
+  }
+  .hero p.lede {
+    font-size: 17px;
+    color: #C9E4E0;
+    max-width: 46ch;
+    margin: 0 0 26px;
+  }
+  .hero-cta { display: flex; gap: 14px; align-items: center; }
+  .btn-primary {
+    background: var(--mint);
+    color: #06201D;
+    border: none;
+    padding: 13px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-primary:hover { background: #6FE6D7; }
+  .hero-note { font-size: 13px; color: var(--muted); }
+
+  .hero-visual {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 28px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #ambientWave { width: 100%; height: 140px; }
+
+  /* ---------- Tool section ---------- */
+  .tool { padding: 20px 6vw 70px; }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 22px;
+  }
+  .card h2 {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 22px;
+    margin: 0 0 6px;
+  }
+  .card .sub { color: var(--muted); font-size: 14px; margin: 0 0 22px; }
+
+  .dropzone {
+    border: 1.5px dashed #2E5A61;
+    border-radius: 12px;
+    padding: 36px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .dropzone:hover, .dropzone.dragover {
+    border-color: var(--mint);
+    background: rgba(87, 217, 201, 0.05);
+  }
+  .dropzone .icon { font-size: 34px; margin-bottom: 10px; }
+  .dropzone .main-text { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .dropzone .sub-text { font-size: 13px; color: var(--muted); }
+  input[type=file] { display: none; }
+
+  .file-chip {
+    margin-top: 14px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: var(--panel-2);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: var(--font-mono);
+  }
+
+  button.analyze {
+    margin-top: 18px;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: var(--mint);
+    color: #06201D;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  button.analyze:disabled { opacity: 0.4; cursor: not-allowed; }
+  button.analyze:not(:disabled):hover { background: #6FE6D7; }
+
+  .loading {
+    display: none;
+    text-align: center;
+    padding: 20px 0 4px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .spinner {
+    width: 24px; height: 24px;
+    border: 3px solid var(--panel-2);
+    border-top-color: var(--mint);
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .result { display: none; }
+  .result-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .result-badge.fake { background: rgba(255, 111, 89, 0.14); color: var(--coral); border: 1.5px solid var(--coral); }
+  .result-badge.real { background: rgba(87, 217, 201, 0.14); color: var(--mint); border: 1.5px solid var(--mint); }
+
+  .confidence-row { margin-top: 20px; }
+  .confidence-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .bar-bg { background: var(--panel-2); border-radius: 6px; height: 10px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; transition: width 0.6s ease; }
+  .bar-fill.fake { background: var(--coral); }
+  .bar-fill.real { background: var(--mint); }
+
+  canvas#waveform {
+    width: 100%;
+    height: 100px;
+    margin-top: 22px;
+    border-radius: 8px;
+    background: #081A1F;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 18px;
+    margin-top: 12px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    color: var(--muted);
+  }
+
+  .next-steps {
+    margin-top: 24px;
+    padding: 18px 20px;
+    border-radius: 10px;
+    border-left: none;
+  }
+  .next-steps.fake { background: rgba(255, 111, 89, 0.08); border: 1px solid rgba(255, 111, 89, 0.35); }
+  .next-steps.real { background: rgba(87, 217, 201, 0.08); border: 1px solid rgba(87, 217, 201, 0.3); }
+  .next-steps h3 { margin: 0 0 10px; font-size: 15px; font-family: var(--font-body); }
+  .next-steps ul { margin: 0; padding-left: 20px; font-size: 14px; color: #DCEFEC; }
+  .next-steps li { margin-bottom: 6px; }
+
+  .error-banner {
+    background: rgba(255, 111, 89, 0.1);
+    border: 1px solid var(--coral);
+    color: #FFD9D0;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+
+  .explain {
+    margin-top: 18px;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ---------- How it works ---------- */
+  .how { padding: 10px 6vw 70px; }
+  .how h2 { font-family: var(--font-head); font-weight: 600; font-size: 26px; margin: 0 0 34px; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .step .num { font-family: var(--font-mono); color: var(--mint); font-size: 13px; margin-bottom: 10px; }
+  .step h3 { font-size: 16px; margin: 0 0 8px; }
+  .step p { font-size: 14px; color: var(--muted); margin: 0; }
+
+  /* ---------- Why it matters ---------- */
+  .why { padding: 10px 6vw 70px; }
+  .why-inner {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 36px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .why h2 { font-family: var(--font-head); font-weight: 600; font-size: 24px; margin: 0 0 14px; }
+  .why p { font-size: 14.5px; color: #C9E4E0; margin: 0 0 12px; }
+  .tips { list-style: none; margin: 0; padding: 0; }
+  .tips li {
+    font-size: 14px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+    color: #DCEFEC;
+  }
+  .tips li:first-child { border-top: none; }
+  .tips b { color: var(--paper); }
+
+  footer {
+    padding: 30px 6vw 50px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  footer .helpline { color: var(--paper); font-weight: 600; }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; padding-top: 40px; }
+    .steps { grid-template-columns: 1fr; }
+    .why-inner { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="brand-wrap">
+    <div class="brand">
+      <span class="brand-mark">🛡️</span>
+      VoiceGuard
+    </div>
+    <span class="brand-hindi">आवाज़ की सच्चाई परखें</span>
+  </div>
+  <span class="tag">AI voice verification, free to use</span>
+</nav>
+
+<section class="hero">
+  <div>
+    <h1>Verify a voice before you trust it.</h1>
+    <p class="lede">
+      AI can now clone anyone's voice from just a few seconds of audio. Got a suspicious call
+      or voice note? Upload it here and find out in seconds — real or AI-generated.
+    </p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})">Check a voice</button>
+      <span class="hero-note">No signup, completely free</span>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <canvas id="ambientWave"></canvas>
+  </div>
+</section>
+
+<section class="tool" id="tool">
+  <div class="max">
+
+    {% if not model_ready %}
+    <div class="error-banner">
+      ⚠️ {{ model_error }}
+    </div>
+    {% endif %}
+
+    <div class="card">
+      <h2>Upload an audio clip</h2>
+      <p class="sub">A phone call recording, a WhatsApp voice note, or any audio file</p>
+
+      <div class="dropzone" id="dropzone">
+        <div class="icon">📁</div>
+        <div class="main-text">Drop a file here, or click to browse</div>
+        <div class="sub-text">WAV, MP3, M4A, OGG, FLAC supported</div>
+        <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.ogg,.flac">
+      </div>
+
+      <div class="file-chip" id="fileChip">
+        <span>🎵</span>
+        <span id="fileName"></span>
+      </div>
+
+      <button class="analyze" id="analyzeBtn" disabled {{ 'disabled' if not model_ready else '' }}>
+        Analyze Voice
+      </button>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        Analyzing audio...
+      </div>
+    </div>
+
+    <div class="card result" id="resultCard">
+      <div id="badgeWrap"></div>
+
+      <div class="confidence-row">
+        <div class="confidence-label"><span>REAL</span><span id="realPct"></span></div>
+        <div class="bar-bg"><div class="bar-fill real" id="realBar" style="width:0%"></div></div>
+      </div>
+      <div class="confidence-row">
+        <div class="confidence-label"><span>FAKE / CLONED</span><span id="fakePct"></span></div>
+        <div class="bar-bg"><div class="bar-fill fake" id="fakeBar" style="width:0%"></div></div>
+      </div>
+
+      <canvas id="waveform"></canvas>
+
+      <div class="meta-row">
+        <span id="durationMeta"></span>
+      </div>
+
+      <div class="next-steps" id="nextSteps"></div>
+
+      <div class="explain">
+        This tool runs on a small trained model — it hasn't yet been tested against a large,
+        independent dataset (like ASVspoof). Don't base a major financial decision on this
+        result alone — always confirm with a callback.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="how">
+  <div class="max">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Upload</h3>
+        <p>Drop in any audio that feels off — no editing or trimming needed.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>AI analyzes it</h3>
+        <p>The system checks pitch, rhythm, and frequency patterns that cloning tools tend to leave behind.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Result and next step</h3>
+        <p>Along with a confidence score, you're told exactly what to do next if there's risk.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="max">
+    <div class="why-inner">
+      <div>
+        <h2>Why this matters</h2>
+        <p>
+          It now takes just a few seconds of recording — a YouTube video, an old voice note — to
+          clone someone's voice convincingly. Fraud calls impersonating a son, a boss, or a relative
+          are rising across the country, and most people simply can't tell a real voice from a
+          cloned one over the phone.
+        </p>
+        <p>One quick check can prevent a costly mistake.</p>
+      </div>
+      <ul class="tips">
+        <li><b>Call back yourself.</b> Use the saved number to confirm, not the number the call came from.</li>
+        <li><b>Keep a family safe word.</b> A code word only your household knows, to ask for in an emergency call.</li>
+        <li><b>Don't send money instantly.</b> Scammers create urgency on purpose — take a minute to verify.</li>
+        <li><b>Report it.</b> Report suspected fraud to the 1930 helpline or at cybercrime.gov.in.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="max">
+    This is a prototype tool that gives an estimate based on audio patterns, not a 100% guarantee.
+    If you're facing or suspect a financial fraud, call <span class="helpline">1930</span>
+    (National Cyber Crime Helpline) right away or report it at cybercrime.gov.in.
+  </div>
+</footer>
+
+<script>
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const fileChip = document.getElementById('fileChip');
+const fileName = document.getElementById('fileName');
+const analyzeBtn = document.getElementById('analyzeBtn');
+const loading = document.getElementById('loading');
+const resultCard = document.getElementById('resultCard');
+
+let selectedFile = null;
+
+dropzone.addEventListener('click', () => fileInput.click());
+
+dropzone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropzone.classList.add('dragover');
+});
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+dropzone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropzone.classList.remove('dragover');
+  if (e.dataTransfer.files.length) {
+    handleFile(e.dataTransfer.files[0]);
+  }
+});
+
+fileInput.addEventListener('change', () => {
+  if (fileInput.files.length) handleFile(fileInput.files[0]);
+});
+
+function handleFile(file) {
+  selectedFile = file;
+  fileName.textContent = file.name;
+  fileChip.style.display = 'flex';
+  analyzeBtn.disabled = false;
+  resultCard.style.display = 'none';
+}
+
+analyzeBtn.addEventListener('click', async () => {
+  if (!selectedFile) return;
+  loading.style.display = 'block';
+  resultCard.style.display = 'none';
+  analyzeBtn.disabled = true;
+
+  const formData = new FormData();
+  formData.append('audio', selectedFile);
+
+  try {
+    const res = await fetch('/api/predict', { method: 'POST', body: formData });
+    const data = await res.json();
+    loading.style.display = 'none';
+    analyzeBtn.disabled = false;
+
+    if (!res.ok) {
+      alert(data.error || 'Kuch galat ho gaya.');
+      return;
+    }
+    showResult(data);
+  } catch (err) {
+    loading.style.display = 'none';
+    analyzeBtn.disabled = false;
+    alert('Could not connect to the server: ' + err.message);
+  }
+});
+
+function showResult(data) {
+  const isFake = data.label === 'FAKE';
+  const badgeWrap = document.getElementById('badgeWrap');
+  badgeWrap.innerHTML = `
+    <div class="result-badge ${isFake ? 'fake' : 'real'}">
+      ${isFake ? '🔴' : '🟢'} ${data.label} VOICE — ${data.confidence}% confidence
+    </div>
+  `;
+
+  document.getElementById('realPct').textContent = data.prob_real + '%';
+  document.getElementById('fakePct').textContent = data.prob_fake + '%';
+  document.getElementById('realBar').style.width = data.prob_real + '%';
+  document.getElementById('fakeBar').style.width = data.prob_fake + '%';
+  document.getElementById('durationMeta').textContent = 'Duration: ' + data.duration_sec + 's';
+
+  const nextSteps = document.getElementById('nextSteps');
+  nextSteps.className = 'next-steps ' + (isFake ? 'fake' : 'real');
+  if (isFake) {
+    nextSteps.innerHTML = `
+      <h3>⚠️ What to do next</h3>
+      <ul>
+        <li>Don't send any money or OTP over this call or message</li>
+        <li>Disconnect and call the person back yourself, on their saved number</li>
+        <li>Ask a family safe word, if you have one set up</li>
+        <li>If money has already been sent, call 1930 or report at cybercrime.gov.in immediately</li>
+      </ul>
+    `;
+  } else {
+    nextSteps.innerHTML = `
+      <h3>✅ This voice looks real</h3>
+      <ul>
+        <li>For large amounts, it's still worth confirming through another channel</li>
+        <li>This tool isn't a 100% guarantee — trust your judgement too</li>
+      </ul>
+    `;
+  }
+
+  drawWaveform(data.waveform, isFake);
+  resultCard.style.display = 'block';
+}
+
+// ambient idle waveform in the hero — purely decorative
+(function ambientWave() {
+  const canvas = document.getElementById('ambientWave');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const ctx = canvas.getContext('2d');
+  const bars = 40;
+  const phases = Array.from({length: bars}, () => Math.random() * Math.PI * 2);
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let t = 0;
+  function frame() {
+    const rect = canvas.getBoundingClientRect();
+    const w = rect.width, h = rect.height;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    const barW = w / bars;
+    ctx.fillStyle = '#57D9C9';
+    ctx.globalAlpha = 0.75;
+    for (let i = 0; i < bars; i++) {
+      const amp = (Math.sin(t * 0.04 + phases[i]) * 0.5 + 0.5) * 0.7 + 0.08;
+      const barH = amp * h;
+      ctx.fillRect(i * barW, (h - barH) / 2, Math.max(1, barW - 3), barH);
+    }
+    t++;
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+function drawWaveform(points, isFake) {
+  const canvas = document.getElementById('waveform');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, rect.width, rect.height);
+
+  const w = rect.width, h = rect.height, mid = h / 2;
+  const barWidth = w / points.length;
+  const color = isFake ? '#E85D5D' : '#3FCB8C';
+
+  ctx.fillStyle = color;
+  points.forEach((v, i) => {
+    const barH = Math.max(2, Math.abs(v) * h * 0.9);
+    ctx.fillRect(i * barWidth, mid - barH / 2, Math.max(1, barWidth - 1), barH);
+  });
+}
+</script>
+
+</body>
+</html>
